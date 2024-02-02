@@ -23,8 +23,8 @@ router.post("/create-checkout-session", async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: "http://localhost:3000/success",
-      cancel_url: "http://localhost:3000/cancel",
+      success_url: "https://the-software-academy.com/success",
+      cancel_url: "https://the-software-academy.com/cancel",
       metadata: {
         userId: userId, // Replace with the actual user ID
         courseId: courseId,
