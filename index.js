@@ -36,7 +36,6 @@ app.use("/owns", ownsRouter);
 app.use("/exercise", exerciseRouter);
 app.use("/exerciseForLesson", exerciseForLessonRouter);
 
-const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 app.post("/webhook", async (req, res) => {
   const event = req.body;
 
