@@ -1,7 +1,16 @@
-const express = require("express");
 const Users = require("../models/Users");
+const rateLimit = require("express-rate-limit");
 
-//bug
+const minutes = 15;
+
+// Rate limit configuration
+const limiter = rateLimit({
+  windowMs: minutes * (60 * 1000),
+  max: 100,
+  message: "Too many requests from this IP, please try again later.",
+});
+
+// Apply rate limiter to specific routes
 const verifyAuth = async (req, res, next) => {
   try {
     const { email, id } = req.body;
@@ -21,4 +30,14 @@ const verifyAuth = async (req, res, next) => {
   }
 };
 
-module.exports = verifyAuth;
+// Additional middleware for more protection
+const additionalMiddleware = (req, res, next) => {
+  // Add your additional middleware logic here
+  // For example, you can check for authentication tokens, validate input, etc.
+  next();
+};
+
+module.exports = {
+  verifyAuth: limiter(verifyAuth), // Apply rate limiter to verifyAuth middleware
+  additionalMiddleware: additionalMiddleware,
+};

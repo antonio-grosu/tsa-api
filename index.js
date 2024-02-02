@@ -5,7 +5,7 @@ const app = express();
 require("dotenv").config();
 
 //BUG MIDDLEWARE
-const middleware = require("./middleware/index");
+// const middleware = require("./middleware/index");
 //BUG MIDDLEWARE
 
 app.use(cors()); // Use cors middleware
@@ -36,16 +36,20 @@ app.use("/owns", ownsRouter);
 app.use("/exercise", exerciseRouter);
 app.use("/exerciseForLesson", exerciseForLessonRouter);
 
-// const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
+const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 app.post("/webhook", async (req, res) => {
-  const event = req.body;
-  // Handle the event
-
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+  } catch (err) {
+    response.status(400).send(`Webhook Error: ${err.message}`);
+    return;
+  }
   switch (event.type) {
     case "checkout.session.completed":
       const session = event.data.object;
-      const userId = session.metadata.userId;
-      const courseId = session.metadata.courseId;
+      const userId = Number(session.metadata.userId);
+      const courseId = Number(session.metadata.courseId);
       // Use the userId as needed for further processing
       db.Owns.create({
         userId: userId,
