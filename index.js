@@ -38,18 +38,13 @@ app.use("/exerciseForLesson", exerciseForLessonRouter);
 
 const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
 app.post("/webhook", async (req, res) => {
-  let event;
-  try {
-    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-  } catch (err) {
-    response.status(400).send(`Webhook Error: ${err.message}`);
-    return;
-  }
+  const event = req.body;
+
   switch (event.type) {
     case "checkout.session.completed":
       const session = event.data.object;
-      const userId = Number(session.metadata.userId);
-      const courseId = Number(session.metadata.courseId);
+      const userId = session.metadata.userId;
+      const courseId = session.metadata.courseId;
       // Use the userId as needed for further processing
       db.Owns.create({
         userId: userId,
@@ -69,6 +64,27 @@ app.post("/webhook", async (req, res) => {
   // Return a 200 response to acknowledge receipt of the event
   res.json({ received: true });
 });
+
+// app.post("/webhook", async (req, res) => {
+//   const event = req.body;
+//   // Handle the event
+
+//   switch (event.type) {
+//     case "checkout.session.completed":
+//       const session = event.data.object;
+//       const userId = session.metadata.userId;
+//       // Use the userId as needed for further processing
+//       User.findByIdAndUpdate(userId, { isPaid: true }, { new: true })
+//         .then((updatedUser) => {
+//           console.log("User updated:", updatedUser);
+//           // Handle success response if needed
+//         })
+//         .catch((err) => {
+//           console.error("Error updating user:", err);
+//           // Handle error response if needed
+//         });
+//       break;
+//   }
 
 db.sequelize.sync().then(() => {
   app.listen(process.env.PORT || localPort, () => {
