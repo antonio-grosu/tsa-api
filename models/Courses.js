@@ -1,40 +1,50 @@
-module.exports = (sequelize, DataTypes) => {
-    const Courses = sequelize.define('Courses', {
-        title: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        description: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        dateOfCreation: {
-            type: DataTypes.DATE,
-            allowNull: true
-        },
-        authorId: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        icon: {
-            type: DataTypes.STRING,
-            allowNull: true
-        },
-    }, {
-        classMethods: {
-            associate: (models) => {
-                Courses.belongsTo(models.Users, {
-                    foreignKey: 'authorId',
-                    as: 'author'
-                });
-                Courses.hasMany(models.Lessons, {
-                    foreignKey: 'courseId',
-                    as: 'lessons'
-                });
-            }
-        }
-    }
-    );
+const models = require("../models");
 
-    return Courses;
-}
+module.exports = (sequelize, DataTypes) => {
+  const Courses = sequelize.define(
+    "Courses",
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      dateOfCreation: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      icon: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+    },
+    {
+      classMethods: {
+        associate: (models) => {
+          Courses.belongsTo(models.CreatedBy, {
+            foreignKey: "courseId",
+            as: "author",
+          });
+          Courses.hasMany(models.Lessons, {
+            foreignKey: "courseId",
+            as: "lessons",
+          });
+          Courses.hasMany(models.OwnedBy, {
+            foreignKey: "courseId",
+            as: "users",
+          });
+        },
+      },
+    }
+  );
+
+  return Courses;
+};

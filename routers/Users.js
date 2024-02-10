@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { Users } = require("../models");
 const bcrypt = require("bcryptjs");
+const models = require("../models");
+const Users = models.users;
 
 // Routes
 
@@ -116,41 +117,10 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// Put modify user by username
-router.put("/:username", async (req, res) => {
-  try {
-    const user = await Users.findOne({
-      where: { userName: req.params["username"] },
-    });
-    const newUser = req.body;
-    await user.update(newUser);
-    res.json(newUser);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
-});
 // DELETE user by id
 router.delete("/:id", async (req, res) => {
   try {
     const user = await Users.findByPk(req.params["id"]);
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-    await user.destroy();
-    res.json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
-// DELETE user by email
-router.delete("/:email", async (req, res) => {
-  try {
-    const user = await Users.findOne({
-      where: { email: req.params["email"] },
-    });
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }

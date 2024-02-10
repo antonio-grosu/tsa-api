@@ -19,18 +19,18 @@ const stripe = require("stripe")(process.env.STRIPE_TEST_KEY);
 const localPort = 8081;
 
 // Routers
-const usersRouter = require("./routers/Users");
 const coursesRouter = require("./routers/Courses");
+const exerciseRouter = require("./routers/Exercise");
 const lessonsRouter = require("./routers/Lessons");
 const partsRouter = require("./routers/Parts");
 const paymentRouter = require("./routers/Payment");
-const exerciseRouter = require("./routers/Exercise");
-app.use("/auth", usersRouter);
+const usersRouter = require("./routers/Users");
 app.use("/courses", coursesRouter);
+app.use("/exercise", exerciseRouter);
 app.use("/lessons", lessonsRouter);
 app.use("/parts", partsRouter);
 app.use("/payment", paymentRouter);
-app.use("/exercise", exerciseRouter);
+app.use("/auth", usersRouter);
 
 app.post("/webhook", async (req, res) => {
   const event = req.body;
