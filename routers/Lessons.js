@@ -20,7 +20,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // POST new lesson for a course by id
-router.post("/:id", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const lesson = req.body;
     lesson.courseId = req.params["id"];

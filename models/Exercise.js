@@ -4,6 +4,11 @@ module.exports = (sequelize, DataTypes) => {
   const Exercise = sequelize.define(
     "Exercise",
     {
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       question: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -33,8 +38,11 @@ module.exports = (sequelize, DataTypes) => {
       classMethods: {
         associate: () => {
           Exercise.belongsTo(models.Lesson, {
-            foreignKey: "lessonId",
-            as: "lesson",
+            foreignKey: {
+              name: "lessonId",
+              allowNull: false,
+              type: DataTypes.UUID,
+            },
           });
         },
       },

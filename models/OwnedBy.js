@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     "OwnedBy",
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         primaryKey: true,
         autoIncrement: true,
       },

@@ -4,6 +4,11 @@ module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define(
     "Users",
     {
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -45,12 +50,18 @@ module.exports = (sequelize, DataTypes) => {
       classMethods: {
         associate: (models) => {
           Users.hasMany(models.CreatedBy, {
-            foreignKey: "userId",
-            as: "courses",
+            foreignKey: {
+              name: "userId",
+              allowNull: false,
+              type: DataTypes.UUID,
+            },
           });
           Users.hasMany(models.OwnedBy, {
-            foreignKey: "userId",
-            as: "courses",
+            foreignKey: {
+              name: "userId",
+              allowNull: false,
+              type: DataTypes.UUID,
+            },
           });
         },
       },

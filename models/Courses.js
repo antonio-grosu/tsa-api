@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     "Courses",
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         primaryKey: true,
         autoIncrement: true,
       },
@@ -30,16 +30,25 @@ module.exports = (sequelize, DataTypes) => {
       classMethods: {
         associate: (models) => {
           Courses.belongsTo(models.CreatedBy, {
-            foreignKey: "courseId",
-            as: "author",
+            foreignKey: {
+              name: "createdBy",
+              allowNull: false,
+              type: DataTypes.UUID,
+            },
           });
           Courses.hasMany(models.Lessons, {
-            foreignKey: "courseId",
-            as: "lessons",
+            foreignKey: {
+              name: "courseId",
+              allowNull: false,
+              type: DataTypes.UUID,
+            },
           });
           Courses.hasMany(models.OwnedBy, {
-            foreignKey: "courseId",
-            as: "users",
+            foreignKey: {
+              name: "courseId",
+              allowNull: false,
+              type: DataTypes.UUID,
+            },
           });
         },
       },
