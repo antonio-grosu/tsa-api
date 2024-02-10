@@ -36,7 +36,22 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: true,
     }
-  });
+  }, {
+    classMethods: {
+      associate: (models) => {
+        Users.hasMany(models.Courses, {
+          foreignKey: 'authorId',
+          as: 'courses'
+        });
+        Users.hasMany(models.Lessons, {
+          foreignKey: 'authorId',
+          as: 'lessons'
+        });
+      }
+    }
+  }
+
+  );
 
   return Users;
 };

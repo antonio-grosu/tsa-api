@@ -20,7 +20,21 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true
         },
-    });
+    }, {
+        classMethods: {
+            associate: (models) => {
+                Courses.belongsTo(models.Users, {
+                    foreignKey: 'authorId',
+                    as: 'author'
+                });
+                Courses.hasMany(models.Lessons, {
+                    foreignKey: 'courseId',
+                    as: 'lessons'
+                });
+            }
+        }
+    }
+    );
 
     return Courses;
 }

@@ -24,17 +24,13 @@ const coursesRouter = require("./routers/Courses");
 const lessonsRouter = require("./routers/Lessons");
 const partsRouter = require("./routers/Parts");
 const paymentRouter = require("./routers/Payment");
-const ownsRouter = require("./routers/Owns");
 const exerciseRouter = require("./routers/Exercise");
-const exerciseForLessonRouter = require("./routers/ExerciseForLesson");
 app.use("/auth", usersRouter);
 app.use("/courses", coursesRouter);
 app.use("/lessons", lessonsRouter);
 app.use("/parts", partsRouter);
 app.use("/payment", paymentRouter);
-app.use("/owns", ownsRouter);
 app.use("/exercise", exerciseRouter);
-app.use("/exerciseForLesson", exerciseForLessonRouter);
 
 app.post("/webhook", async (req, res) => {
   const event = req.body;
