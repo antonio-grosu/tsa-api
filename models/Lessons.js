@@ -11,11 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         dateOfCreation: {
             type: DataTypes.DATE,
             allowNull: true
-        },
-        courseId: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
+        }
     });
 
     return Lessons;
