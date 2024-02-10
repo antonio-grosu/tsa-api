@@ -19,11 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         quizAnswerIsCorrect: {
             type: DataTypes.BOOLEAN,
             allowNull: true
-        },
-        lessonId: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
+        }
     });
 
     return Parts;
