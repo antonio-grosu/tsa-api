@@ -20,14 +20,18 @@ const localPort = 8081;
 
 // Routers
 const coursesRouter = require("./routers/Courses");
+const createdByRouter = require("./routers/CreatedBy");
 const exerciseRouter = require("./routers/Exercise");
 const lessonsRouter = require("./routers/Lessons");
+const ownedByRouter = require("./routers/OwnedBy");
 const partsRouter = require("./routers/Parts");
 const paymentRouter = require("./routers/Payment");
 const usersRouter = require("./routers/Users");
 app.use("/courses", coursesRouter);
+app.use("/createdby", createdByRouter);
 app.use("/exercise", exerciseRouter);
 app.use("/lessons", lessonsRouter);
+app.use("/ownedby", ownedByRouter);
 app.use("/parts", partsRouter);
 app.use("/payment", paymentRouter);
 app.use("/auth", usersRouter);
@@ -41,7 +45,7 @@ app.post("/webhook", async (req, res) => {
       const userId = session.metadata.userId;
       const courseId = session.metadata.courseId;
       // Use the userId as needed for further processing
-      db.Owns.create({
+      db.OwnedBy.create({
         userId: userId,
         courseId: courseId,
       })

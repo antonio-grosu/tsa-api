@@ -30,6 +30,21 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// get exercises by lessonid
+router.get("/lesson/:lessonId", async (req, res) => {
+  try {
+    const exercises = await Exercise.findAll({
+      where: {
+        lessonId: req.params["lessonId"],
+      },
+    });
+    res.json(exercises);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 // POST new exercise
 router.post("/", async (req, res) => {
   try {

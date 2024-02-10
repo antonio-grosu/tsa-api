@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
 });
 
 // GET all courses by author id
-router.get("/:authorId", async (req, res) => {
+router.get("/auth/:authorId", async (req, res) => {
   // find all courses by author id using CreatedBy model
   try {
     const courses = await Courses.findAll({
