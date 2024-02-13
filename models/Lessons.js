@@ -14,10 +14,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    courseId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
   });
 
   Lessons.associate = (models) => {

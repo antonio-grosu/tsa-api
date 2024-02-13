@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { Parts } = require("../models");
+const models = require("../models");
+const Parts = models.Parts;
 
 // Routes
 
@@ -8,6 +9,9 @@ const { Parts } = require("../models");
 router.get("/", async (req, res) => {
   try {
     const parts = await Parts.findAll();
+    if (!parts) {
+      return res.status(404).json({ error: "Parts not found" });
+    }
     res.json(parts);
   } catch (error) {
     console.error(error);
@@ -20,7 +24,7 @@ router.get("/lesson/:lessonId", async (req, res) => {
   try {
     const parts = await Parts.findAll({
       where: {
-        lessonId: req.params["lessonId"],
+        lessonId: req.params["LessonId"],
       },
     });
     res.json(parts);

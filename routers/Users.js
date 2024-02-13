@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const { Users, OwnedBy } = require("../models/Users");
+const models = require("../models");
+const Users = models.Users;
 
 // Routes
 
@@ -10,7 +11,7 @@ router.get("/", async (req, res) => {
   try {
     const users = await Users.findAll();
     if (!users) {
-      return res.status(404).json({ error: "No users found" });
+      return res.status(404).json({ error: "Users not found" });
     }
     res.json(users);
   } catch (error) {
@@ -86,10 +87,7 @@ router.post("/login", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const passwordMatch = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
+    const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return res
         .status(401)

@@ -3,13 +3,9 @@ const express = require("express");
 const cors = require("cors"); // Import cors package
 const app = express();
 require("dotenv").config();
-
-//BUG MIDDLEWARE
-// const middleware = require("./middleware/index");
-//BUG MIDDLEWARE
-
 app.use(cors()); // Use cors middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const db = require("./models");
 
@@ -84,7 +80,7 @@ app.post("/webhook", async (req, res) => {
 //   }
 
 db.sequelize.sync().then(() => {
-  app.listen(process.env.PORT || 8081, () => {
-    console.log(`Server listening at http://localhost:${8081}`);
+  app.listen(process.env.PORT || localPort, () => {
+    console.log(`Server listening at http://localhost:${localPort}`);
   });
 });

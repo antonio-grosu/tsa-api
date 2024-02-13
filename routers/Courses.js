@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { Courses, CreatedBy } = require("../models");
+const models = require("../models");
+const Courses = models.Courses;
 
 // Routes
 
@@ -17,11 +18,9 @@ router.get("/", async (req, res) => {
 
 // GET all courses by author id
 router.get("/auth/:authorId", async (req, res) => {
-  // find all courses by author id using CreatedBy model
   try {
-    const courses = await CreatedBy.findAll({
+    const courses = await Courses.findAll({
       where: { authorId: req.params["authorId"] },
-      include: [Courses],
     });
     res.json(courses);
   } catch (error) {
@@ -63,9 +62,16 @@ router.get("/:title", async (req, res) => {
 // POST new course
 router.post("/", async (req, res) => {
   try {
-    const course = req.body;
-    await Courses.create(course);
-    res.json(course);
+    const { title, authorId, description, icon } = req.body;
+    const newCourse = {
+      title: title,
+      authorId: authorId,
+      description: description,
+      dateOfCreation: new Date(),
+      icon: icon,
+    };
+    await Courses.create(newCourse);
+    res.json(newCourse);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });

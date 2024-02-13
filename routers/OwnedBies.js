@@ -1,8 +1,25 @@
 const express = require("express");
 const router = express.Router();
-const { OwnedBies, Courses, Users } = require("../models");
+const models = require("../models");
+const OwnedBies = models.OwnedBies;
+const Courses = models.Courses;
+const Users = models.Users;
 
 // Routes
+
+// GET all ownerships
+router.get("/", async (req, res) => {
+  try {
+    const ownerships = await OwnedBies.findAll();
+    if (!ownerships) {
+      return res.status(404).json({ error: "Ownerships not found" });
+    }
+    res.json(ownerships);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 
 // GET all courses owned by user with userId
 router.get("/user/:userId", async (req, res) => {
@@ -45,8 +62,8 @@ router.post("/", async (req, res) => {
   try {
     const { userId, courseId } = req.body;
     const ownership = await OwnedBies.create({
-      userId: userId,
       courseId: courseId,
+      userId: userId,
     });
     res.json(ownership);
   } catch (error) {

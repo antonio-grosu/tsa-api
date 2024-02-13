@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Users.associate = (models) => {
-    Users.hasMany(OwnedBies, {
+    Users.hasMany(models.OwnedBies, {
       onDelete: "cascade ",
     });
   };
