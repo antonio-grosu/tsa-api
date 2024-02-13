@@ -1,54 +1,33 @@
 const models = require("../models");
 
 module.exports = (sequelize, DataTypes) => {
-  const Lessons = sequelize.define(
-    "Lessons",
-    {
-      title: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      description: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      dateOfCreation: {
-        type: DataTypes.DATE,
-        allowNull: true,
-      },
-      courseId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
+  const Lessons = sequelize.define("Lessons", {
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-    {
-      classMethods: {
-        associate: (models) => {
-          Lessons.belongsTo(models.Courses, {
-            foreignKey: {
-              name: "courseId",
-              allowNull: false,
-              type: DataTypes.UUID,
-            },
-          });
-          Lessons.hasMany(models.Exercise, {
-            foreignKey: {
-              name: "lessonId",
-              allowNull: false,
-              type: DataTypes.UUID,
-            },
-          });
-          Lessons.hasMany(models.Parts, {
-            foreignKey: {
-              name: "lessonId",
-              allowNull: false,
-              type: DataTypes.UUID,
-            },
-          });
-        },
-      },
-    }
-  );
+    description: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    dateOfCreation: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    courseId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  });
+
+  Lessons.associate = (models) => {
+    Lessons.hasMany(models.Exercise, {
+      onDelete: "cascade",
+    });
+    Lessons.hasMany(models.Parts, {
+      onDelete: "cascade",
+    });
+  };
 
   return Lessons;
 };
