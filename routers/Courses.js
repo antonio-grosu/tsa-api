@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const models = require("../models");
-const Courses = models.courses;
+const { Courses, CreatedBy } = require("../models");
 
 // Routes
 
@@ -20,12 +19,9 @@ router.get("/", async (req, res) => {
 router.get("/auth/:authorId", async (req, res) => {
   // find all courses by author id using CreatedBy model
   try {
-    const courses = await Courses.findAll({
-      include: {
-        model: CreatedBy,
-        as: "author",
-        where: { userId: req.params["authorId"] },
-      },
+    const courses = await CreatedBy.findAll({
+      where: { authorId: req.params["authorId"] },
+      include: [Courses],
     });
     res.json(courses);
   } catch (error) {

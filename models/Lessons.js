@@ -4,11 +4,6 @@ module.exports = (sequelize, DataTypes) => {
   const Lessons = sequelize.define(
     "Lessons",
     {
-      id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        autoIncrement: true,
-      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,

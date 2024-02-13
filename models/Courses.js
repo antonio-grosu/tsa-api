@@ -4,12 +4,11 @@ module.exports = (sequelize, DataTypes) => {
   const Courses = sequelize.define(
     "Courses",
     {
-      id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        autoIncrement: true,
-      },
       title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      authorId: {
         type: DataTypes.STRING,
         allowNull: false,
       },

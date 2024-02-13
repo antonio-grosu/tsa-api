@@ -4,11 +4,6 @@ module.exports = (sequelize, DataTypes) => {
   const Exercise = sequelize.define(
     "Exercise",
     {
-      id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        autoIncrement: true,
-      },
       question: {
         type: DataTypes.STRING,
         allowNull: false,

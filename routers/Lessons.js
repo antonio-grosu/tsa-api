@@ -1,9 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const models = require("../models");
-const Lessons = models.lessons;
+const { Lessons } = require("../models");
 
 // Routes
+
+// GET all Parts by lessonId
+router.get("/lesson/:lessonId", async (req, res) => {
+  try {
+    const lessons = await Lessons.findAll({
+      where: {
+        lessonId: req.params["lessonId"],
+      },
+    });
+    res.json(lessons);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
 
 // GET lesson by id
 router.get("/:id", async (req, res) => {

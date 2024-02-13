@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const models = require("../models");
-const Users = models.users;
+const { Users } = require("../models/Users");
 
 // Routes
 
@@ -50,21 +49,20 @@ router.get("/:username", async (req, res) => {
 // POST new user
 router.post("/", async (req, res) => {
   try {
-    const { firstName, lastName, userName, email, password } = req.body;
-    bcrypt.hash(password, 10).then(async (hash) => {
-      const newUser = await Users.create({
-        userName: userName,
-        password: hash,
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        level: 0,
-        icon: "",
-        dateOfCreation: new Date(),
-        dateOfLastLogin: new Date(),
-      });
-      res.json(newUser);
-    });
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const user = {
+      email: req.body.email,
+      password: hashedPassword,
+      userName: req.body.userName,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      xp: 0,
+      icon: "",
+      dateOfCreation: new Date(),
+      dateOfLastLogin: new Date(),
+    };
+    const newUser = await Users.create(user);
+    res.json(newUser);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });

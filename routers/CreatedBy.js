@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const models = require("../models");
-const CreatedBy = models.CreatedBy;
+const { CreatedBy, Courses } = require("../models");
 
 // Routes
 
@@ -15,10 +14,22 @@ router.get("/author/:userId", async (req, res) => {
     // Get all courses with courseIds
     const courses = await Promise.all(
       courseIds.map(async (courseId) => {
-        return await models.Courses.findByPk(courseId.courseId);
+        return await Courses.findByPk(courseId.courseId);
       })
     );
     res.json(courses);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// POST new course created by user
+router.post("/", async (req, res) => {
+  try {
+    const createdBy = req.body;
+    await CreatedBy.create(createdBy);
+    res.json(createdBy);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
