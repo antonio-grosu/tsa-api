@@ -35,5 +35,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
   });
+
   return Exercise;
 };

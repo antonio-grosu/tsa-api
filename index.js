@@ -20,7 +20,6 @@ const localPort = 8081;
 
 // Routers
 const coursesRouter = require("./routers/Courses");
-const createdByRouter = require("./routers/CreatedBy");
 const exerciseRouter = require("./routers/Exercise");
 const lessonsRouter = require("./routers/Lessons");
 const ownedByRouter = require("./routers/OwnedBy");
@@ -28,7 +27,6 @@ const partsRouter = require("./routers/Parts");
 const paymentRouter = require("./routers/Payment");
 const usersRouter = require("./routers/Users");
 app.use("/courses", coursesRouter);
-app.use("/createdby", createdByRouter);
 app.use("/exercise", exerciseRouter);
 app.use("/lessons", lessonsRouter);
 app.use("/ownedby", ownedByRouter);

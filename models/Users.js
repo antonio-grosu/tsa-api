@@ -1,26 +1,24 @@
-const models = require("../models");
-
 module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define("Users", {
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     userName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     firstName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     lastName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     xp: {
       type: DataTypes.INTEGER,
@@ -39,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
   });
+
   Users.associate = (models) => {
     Users.hasMany(models.OwnedBy, {
       onDelete: "cascade ",
