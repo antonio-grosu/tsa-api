@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const models = require("../models");
-const Parts = models.parts;
+const { Parts } = require("../models");
 
 // Routes
 

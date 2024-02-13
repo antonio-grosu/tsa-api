@@ -22,14 +22,14 @@ const localPort = 8081;
 const coursesRouter = require("./routers/Courses");
 const exerciseRouter = require("./routers/Exercise");
 const lessonsRouter = require("./routers/Lessons");
-const ownedByRouter = require("./routers/OwnedBy");
+const ownedBiesRouter = require("./routers/OwnedBies");
 const partsRouter = require("./routers/Parts");
 const paymentRouter = require("./routers/Payment");
 const usersRouter = require("./routers/Users");
 app.use("/courses", coursesRouter);
 app.use("/exercise", exerciseRouter);
 app.use("/lessons", lessonsRouter);
-app.use("/ownedby", ownedByRouter);
+app.use("/ownedbies", ownedBiesRouter);
 app.use("/parts", partsRouter);
 app.use("/payment", paymentRouter);
 app.use("/auth", usersRouter);
@@ -84,7 +84,7 @@ app.post("/webhook", async (req, res) => {
 //   }
 
 db.sequelize.sync().then(() => {
-  app.listen(process.env.PORT || localPort, () => {
-    console.log(`Server listening at http://localhost:${localPort}`);
+  app.listen(process.env.PORT || 8081, () => {
+    console.log(`Server listening at http://localhost:${8081}`);
   });
 });
