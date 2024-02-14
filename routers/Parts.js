@@ -20,11 +20,11 @@ router.get("/", async (req, res) => {
 });
 
 // GET all parts by lessonId
-router.get("/lesson/:lessonId", async (req, res) => {
+router.get("/lesson/:LessonId", async (req, res) => {
   try {
     const parts = await Parts.findAll({
       where: {
-        lessonId: req.params["LessonId"],
+        LessonId: req.params["LessonId"],
       },
     });
     res.json(parts);
@@ -51,7 +51,15 @@ router.get("/:id", async (req, res) => {
 // POST new part
 router.post("/", async (req, res) => {
   try {
-    const part = req.body;
+    const { type, content, LessonId } = req.body;
+    if (!type || !content || !LessonId) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+    const part = {
+      type,
+      content,
+      LessonId,
+    };
     await Parts.create(part);
     res.json(part);
   } catch (error) {

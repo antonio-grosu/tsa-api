@@ -32,6 +32,7 @@ app.use("/auth", usersRouter);
 
 app.post("/webhook", async (req, res) => {
   const event = req.body;
+  const OwnedBies = db.OwnedBies;
 
   switch (event.type) {
     case "checkout.session.completed":
@@ -39,8 +40,8 @@ app.post("/webhook", async (req, res) => {
       const userId = session.metadata.userId;
       const courseId = session.metadata.courseId;
       // Use the userId as needed for further processing
-      db.OwnedBy.create({
-        userId: userId,
+      OwnedBies.create({
+        UserId: userId,
         courseId: courseId,
       })
         .then((data) => {
