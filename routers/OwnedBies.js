@@ -60,12 +60,42 @@ router.get("/course/:courseId", async (req, res) => {
 // POST new ownership
 router.post("/", async (req, res) => {
   try {
-    const { userId, courseId } = req.body;
+    if (!req.body.UserId) {
+      return res.status(400).json({ error: "UserId is required" });
+    }
+    if (!req.body.courseId) {
+      return res.status(400).json({ error: "courseId is required" });
+    }
     const ownership = await OwnedBies.create({
-      courseId: courseId,
-      userId: userId,
+      courseId: req.body.courseId,
+      UserId: req.body.UserId,
     });
     res.json(ownership);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// DELETE ownership
+router.delete("/", async (req, res) => {
+  try {
+    if (!req.query.UserId) {
+      return res.status(400).json({ error: "UserId is required" });
+    }
+    if (!req.query.courseId) {
+      return res.status(400).json({ error: "courseId is required" });
+    }
+    const ownership = await OwnedBies.destroy({
+      where: {
+        courseId: req.body.courseId,
+        UserId: req.body.UserId,
+      },
+    });
+    if (ownership === 0) {
+      return res.status(404).json({ error: "Ownership not found" });
+    }
+    res.json({ message: "Ownership deleted" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
