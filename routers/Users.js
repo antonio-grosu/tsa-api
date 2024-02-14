@@ -37,7 +37,7 @@ router.get("/:id", async (req, res) => {
 // GET user by username
 router.get("/:username", async (req, res) => {
   try {
-    const user = await Users.findOne({
+    const user = await Users.findAll({
       where: { userName: req.params["username"] },
     });
     if (!user) {
@@ -54,6 +54,9 @@ router.get("/:username", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const { email, password, userName, firstName, lastName } = req.body;
+    if (!email || !password || !userName || !firstName || !lastName) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
     bcrypt.hash(String(password), 10).then((hashedPassword) => {
       const newUser = {
         email: email,

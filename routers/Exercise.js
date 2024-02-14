@@ -30,11 +30,11 @@ router.get("/:id", async (req, res) => {
 });
 
 // get exercises by lessonid
-router.get("/lesson/:lessonId", async (req, res) => {
+router.get("/lesson/:LessonId", async (req, res) => {
   try {
     const exercises = await Exercise.findAll({
       where: {
-        lessonId: req.params["lessonId"],
+        LessonId: req.params["LessonId"],
       },
     });
     res.json(exercises);
@@ -47,9 +47,40 @@ router.get("/lesson/:lessonId", async (req, res) => {
 // POST new exercise
 router.post("/", async (req, res) => {
   try {
-    const exercise = req.body;
-    await Exercise.create(exercise);
-    res.json(exercise);
+    const {
+      question,
+      answer1,
+      answer2,
+      answer3,
+      answer4,
+      correctAnswer,
+      hint,
+      explanation,
+      LessonId,
+    } = req.body;
+    if (
+      !question ||
+      !answer1 ||
+      !answer2 ||
+      !answer3 ||
+      !answer4 ||
+      !correctAnswer ||
+      !LessonId
+    ) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+    const newExercise = {
+      question: question,
+      answer1: answer1,
+      answer2: answer2,
+      answer3: answer3,
+      answer4: answer4,
+      correctAnswer: correctAnswer,
+      hint: hint,
+      explanation: explanation,
+      LessonId: LessonId,
+    };
+    const exercise = await Exercise.create(newExercise);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });

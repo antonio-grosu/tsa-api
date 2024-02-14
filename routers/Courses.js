@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
 });
 
 // GET all courses by author id
-router.get("/auth/:authorId", async (req, res) => {
+router.get("/author/:authorId", async (req, res) => {
   try {
     const courses = await Courses.findAll({
       where: { authorId: req.params["authorId"] },
@@ -46,7 +46,7 @@ router.get("/:id", async (req, res) => {
 // GET course by title
 router.get("/:title", async (req, res) => {
   try {
-    const course = await Courses.findOne({
+    const course = await Courses.findAll({
       where: { title: req.params["title"] },
     });
     if (!course) {
@@ -63,6 +63,9 @@ router.get("/:title", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const { title, authorId, description, icon } = req.body;
+    if (!title || !authorId) {
+      return res.status(400).json({ error: "Missing essential fields" });
+    }
     const newCourse = {
       title: title,
       authorId: authorId,
@@ -93,44 +96,10 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// PUT modify course by title
-router.put("/:title", async (req, res) => {
-  try {
-    const course = await Courses.findOne({
-      where: { title: req.params["title"] },
-    });
-    if (!course) {
-      return res.status(404).json({ error: "Course not found" });
-    }
-    await course.update(req.body);
-    res.json(course);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
 // DELETE course by id
 router.delete("/:id", async (req, res) => {
   try {
     const course = await Courses.findByPk(req.params["id"]);
-    if (!course) {
-      return res.status(404).json({ error: "Course not found" });
-    }
-    await course.destroy();
-    res.json(course);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
-// DELETE course by title
-router.delete("/:title", async (req, res) => {
-  try {
-    const course = await Courses.findOne({
-      where: { title: req.params["title"] },
-    });
     if (!course) {
       return res.status(404).json({ error: "Course not found" });
     }
