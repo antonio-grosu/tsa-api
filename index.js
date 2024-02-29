@@ -37,11 +37,11 @@ app.post("/webhook", async (req, res) => {
   switch (event.type) {
     case "checkout.session.completed":
       const session = event.data.object;
-      const userId = session.metadata.userId;
+      const UserId = session.metadata.UserId;
       const courseId = session.metadata.courseId;
       // Use the userId as needed for further processing
       OwnedBies.create({
-        UserId: userId,
+        UserId: UserId,
         courseId: courseId,
       })
         .then((data) => {
