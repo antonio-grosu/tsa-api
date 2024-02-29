@@ -22,10 +22,10 @@ router.get("/", async (req, res) => {
 });
 
 // GET all courses owned by user with userId
-router.get("/user/:userId", async (req, res) => {
+router.get("/user/:UserId", async (req, res) => {
   try {
     const courseIds = await OwnedBies.findAll({
-      where: { userId: req.params["userId"] },
+      where: { UserId: req.params["UserId"] },
     });
     const courses = await Promise.all(
       courseIds.map(async (courseId) => {
@@ -33,6 +33,25 @@ router.get("/user/:userId", async (req, res) => {
       })
     );
     res.json(courses);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// GET one ownership using courseId and UserId
+router.get("/:courseId/:UserId", async (req, res) => {
+  try {
+    const ownership = await OwnedBies.findOne({
+      where: {
+        courseId: req.params["courseId"],
+        UserId: req.params["UserId"],
+      },
+    });
+    if (!ownership) {
+      return res.status(404).json({ error: "Ownership not found" });
+    }
+    res.json(ownership);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
