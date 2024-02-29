@@ -1,11 +1,12 @@
 {
   "development": {
-    "username": "root",
-    "password": "root",
-    "database": "scienceit",
-    "host": "127.0.0.1",
+    "username": "doadmin",
+    "password": "AVNS_dfo0h7ILrP9GIflSVb2",
+    "database": "tsa_curr",
+    "port": 25060,
+    "host": "db-mysql-nyc3-43887-do-user-15738595-0.c.db.ondigitalocean.com",
     "dialect": "mysql",
-    "port": 8080
+    "sslmode": "REQUIRED"
   },
   "test": {
     "username": "root",
@@ -20,6 +21,7 @@
     "database": "tsa_curr",
     "port": 25060,
     "host": "db-mysql-nyc3-43887-do-user-15738595-0.c.db.ondigitalocean.com",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "sslmode": "REQUIRED"
   }
 }
