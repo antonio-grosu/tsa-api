@@ -40,18 +40,11 @@ app.post("/webhook", async (req, res) => {
       const UserId = session.metadata.UserId;
       const courseId = session.metadata.courseId;
       // Use the userId as needed for further processing
-      OwnedBies.create({
-        UserId: UserId,
+      const data = await OwnedBies.create({
         courseId: courseId,
-      })
-        .then((data) => {
-          console.log("Owns created:", data);
-          // Handle success response if needed
-        })
-        .catch((err) => {
-          console.error("Error creating owns:", err);
-          // Handle error response if needed
-        });
+        UserId: UserId,
+      });
+      res.json(data);
       break;
   }
 
