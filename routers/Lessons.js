@@ -4,6 +4,17 @@ const { Lessons } = require("../models");
 
 // Routes
 
+// GET all lessons
+router.get("/", async (req, res) => {
+  try {
+    const lessons = await Lessons.findAll();
+    res.json(lessons);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 // GET all Parts by lessonId
 router.get("/lesson/:lessonId", async (req, res) => {
   try {
