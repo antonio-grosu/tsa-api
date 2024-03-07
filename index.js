@@ -21,12 +21,14 @@ const lessonsRouter = require("./routers/Lessons");
 const ownedBiesRouter = require("./routers/OwnedBies");
 const partsRouter = require("./routers/Parts");
 const paymentRouter = require("./routers/Payment");
+const sumPaidRouter = require("./routers/SumPaid");
 const usersRouter = require("./routers/Users");
 app.use("/courses", coursesRouter);
 app.use("/exercise", exerciseRouter);
 app.use("/lessons", lessonsRouter);
 app.use("/ownedbies", ownedBiesRouter);
 app.use("/parts", partsRouter);
+app.use("/sumpaid", sumPaidRouter);
 app.use("/payment", paymentRouter);
 app.use("/auth", usersRouter);
 
