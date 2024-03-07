@@ -42,6 +42,9 @@ module.exports = (sequelize, DataTypes) => {
     Users.hasMany(models.OwnedBies, {
       onDelete: "cascade ",
     });
+    Users.hasMany(models.SumPaid, {
+      onDelete: "cascade",
+    });
   };
 
   return Users;
