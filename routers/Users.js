@@ -107,7 +107,7 @@ router.post("/login", async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Sugi pula" });
+    res.status(500).json({ error: "Server is down. I repeat. Server is down" });
   }
 });
 
