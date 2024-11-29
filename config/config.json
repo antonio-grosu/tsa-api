@@ -4,7 +4,6 @@
     "password": "AVNS_dfo0h7ILrP9GIflSVb2",
     "database": "tsa_curr",
     "port": 25060,
-    "host": "db-mysql-nyc3-43887-do-user-15738595-0.c.db.ondigitalocean.com",
     "dialect": "mysql",
     "sslmode": "REQUIRED"
   },
@@ -20,7 +19,6 @@
     "password": "AVNS_dfo0h7ILrP9GIflSVb2",
     "database": "tsa_curr",
     "port": 25060,
-    "host": "db-mysql-nyc3-43887-do-user-15738595-0.c.db.ondigitalocean.com",
     "dialect": "mysql",
     "sslmode": "REQUIRED"
   }
